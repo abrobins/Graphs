@@ -88,13 +88,13 @@ class Graph:
         # get current vertex (dequeue from queue)
 
         # check if the current vertex has not been visited
-        if current_node not in visited_vertices:
-            visited_vertices.add(current_node)
-            print(current_node)
-            neighbors = self.get_neighbors(current_node)
+            if current_node not in visited_vertices:
+                visited_vertices.add(current_node)
+                print(current_node)
+                neighbors = self.get_neighbors(current_node)
 
-            for neighbor in neighbors:
-                s.push(neighbor)
+                for neighbor in neighbors:
+                    s.push(neighbor)
 
         # print the current vertex
         # mark current vertex as visited
@@ -140,7 +140,20 @@ class Graph:
                 # queue up new path
 
         """
-        pass  # TODO
+        q = Queue()
+        visited_vertices = set()
+        q.enqueue([starting_vertex])
+        while q.size() > 0:
+            current_path = q.dequeue()
+            last_vertex = current_path[-1]
+            if last_vertex == destination_vertex:
+                return current_path
+            if last_vertex not in visited_vertices:
+                visited_vertices.add(last_vertex)
+
+                for neighbor in self.get_neighbors(last_vertex):
+                    new_path = current_path + [neighbor]
+                    q.enqueue(new_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -213,14 +226,14 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    # graph.dft(1)
+    graph.dft(1)
     # graph.dft_recursive(1)
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    # print(graph.bfs(1, 6))
+    print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
